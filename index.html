@@ -461,7 +461,7 @@ body.pvm .fw{display:none!important}
   <label>Duración <span id="trdv"></span></label><input type="range" id="trd" min="200" max="3000" step="100">
   <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:8px"><button class="k" data-a="tra">Aplicar a todas</button><button class="k" data-a="trx">Cerrar</button></div>
   <p class="mut" style="margin:6px 0 0;font-size:11px">Se ve en ▶ Vista previa y en el HTML exportado.</p></div>
-<div id="pv" hidden><iframe id="pvf" title="Vista previa"></iframe></div>
+<div id="pv" hidden><iframe id="pvf" title="Vista previa" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; clipboard-write"></iframe></div>
 <script type="text/plain" id="player-src">(function(){
 var D=JSON.parse(document.getElementById('doc').textContent),PG=D.pages,W=D.w,H=D.h,N=PG.length,WN=D.wins||[],wp=[],wst=[];
 var box=document.getElementById('box'),hold=document.createElement('div'),pages=[],auds=[],cur=0,lk=0,gen=0,modal=0,RL=D.rules||[],GM=D.game||{},G={clicked:{},done:{},vis:{},chain:0};
@@ -1934,7 +1934,7 @@ Object.assign(A,{
     Object.values(AM.live).forEach(x=>x.a.pause());
     cv.discardActiveObject();cv.requestRenderAll();
     PV=1;$('pv').hidden=false;$('bprev').innerHTML='✎<span class="lb"> Volver al editor</span>';
-    buildHTML({pv:1}).then(r=>{if(PV){if(window.PVU)URL.revokeObjectURL(window.PVU);let f=$('pvf');f.removeAttribute('srcdoc');try{window.PVU=URL.createObjectURL(new Blob([r.html],{type:'text/html'}));f.src=window.PVU}catch(_){f.srcdoc=r.html}f.focus()}},()=>{alert('No se pudo generar la vista previa.');if(PV)A.prev()});
+    buildHTML({pv:1}).then(r=>{if(PV){if(window.PVU)URL.revokeObjectURL(window.PVU);let f=$('pvf');f.removeAttribute('srcdoc');if(/"emb":\{/.test(r.html)){f.removeAttribute('src');f.srcdoc=r.html}else{try{window.PVU=URL.createObjectURL(new Blob([r.html],{type:'text/html'}));f.src=window.PVU}catch(_){f.srcdoc=r.html}}f.focus()}},()=>{alert('No se pudo generar la vista previa.');if(PV)A.prev()});
   },
   exh(){
     flush();$('st').textContent='Generando HTML…';
